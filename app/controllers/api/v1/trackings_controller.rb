@@ -10,7 +10,7 @@ class Api::V1::TrackingsController < ApplicationController
     if @tracking.medicines
       @content = {
         tracking: @tracking,
-        medicines: @tracking.medicines, 
+        medicines: @tracking.medicines,
         symptoms: @tracking.symptoms
       }
       render json: @content
