@@ -12,8 +12,11 @@
 
 ActiveRecord::Schema.define(version: 2020_06_11_172617) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "illnesses", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "description"
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 2020_06_11_172617) do
   end
 
   create_table "medicines", force: :cascade do |t|
-    t.integer "tracking_id", null: false
+    t.bigint "tracking_id", null: false
     t.string "name"
     t.float "quantity"
     t.datetime "created_at", precision: 6, null: false
@@ -31,7 +34,7 @@ ActiveRecord::Schema.define(version: 2020_06_11_172617) do
   end
 
   create_table "symptoms", force: :cascade do |t|
-    t.integer "tracking_id", null: false
+    t.bigint "tracking_id", null: false
     t.string "name"
     t.integer "intensity"
     t.datetime "created_at", precision: 6, null: false
@@ -40,7 +43,7 @@ ActiveRecord::Schema.define(version: 2020_06_11_172617) do
   end
 
   create_table "trackings", force: :cascade do |t|
-    t.integer "illness_id", null: false
+    t.bigint "illness_id", null: false
     t.datetime "date"
     t.integer "mood"
     t.float "temperature"
