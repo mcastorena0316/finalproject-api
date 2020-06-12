@@ -6,17 +6,16 @@ ruby '2.6.5'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 
 # Use Puma as the app server
-gem 'puma', '~> 4.1'
 gem 'pg'
+gem 'puma', '~> 4.1'
 
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem 'knock'
+
+gem 'bcrypt'
+gem 'rack-cors'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -31,4 +30,3 @@ group :development do
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-
