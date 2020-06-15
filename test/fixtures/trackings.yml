@@ -2,12 +2,12 @@
 
 one:
   illness: one
-  date: 2020-06-11 12:24:00
-  mood: 
-  temperature: 
+  date: 2020-06-15 16:24:43
+  mood: 1
+  temperature: 1.5
 
 two:
   illness: two
-  date: 2020-06-11 12:24:00
-  mood: 
-  temperature: 
+  date: 2020-06-15 16:24:43
+  mood: 1
+  temperature: 1.5
