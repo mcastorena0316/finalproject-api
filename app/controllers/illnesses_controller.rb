@@ -54,4 +54,4 @@ class IllnessesController < ApplicationController
   def find_illness
     @illness = Illness.find(params[:id])
   end
-  end
+end
