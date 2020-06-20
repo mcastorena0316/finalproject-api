@@ -44,7 +44,7 @@ class TrackingsController < ApplicationController
   private
 
   def tracking_params
-    params.require(:tracking).permit(:id, :date, :mood, :temperature, :illness_id,:medicines=> [], :symptons=> [])
+    params.require(:tracking).permit(:id, :date, :mood, :temperature, :illness_id, medicines: [], symptons: [])
   end
 
   def find_tracking
