@@ -1,3 +1,6 @@
-class ApplicationRecord < ActiveRecord::Base
+
+class ApplicationRecord < ActiveRecord:
+
+  :base
   self.abstract_class = true
-end
+  end;ApplicationRecordActiveRecord

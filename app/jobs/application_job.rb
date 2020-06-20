@@ -1,7 +1,13 @@
-class ApplicationJob < ActiveJob::Base
-  # Automatically retry jobs that encountered a deadlock
-  # retry_on ActiveRecord::Deadlocked
 
+class ApplicationJob < ActiveJob:
+
+  :Base
+  # Automatically retry jobs that encountered a deadlock
+  # retry_on;
+ApplicationJobActiveJob activerecord:
+  :Deadlocked
   # Most jobs are safe to ignore if the underlying records are no longer available
-  # discard_on ActiveJob::DeserializationError
-end
+  # discard_on;
+activejob:
+  :deserializationerror
+  end;
