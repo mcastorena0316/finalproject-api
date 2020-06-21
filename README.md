@@ -1,27 +1,3 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
 # Final Capstone Project Project API : Tracking app
 
 <div align="center">
@@ -42,19 +18,55 @@ Things you may want to cover:
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Live version of the project: [Live version]()
+The objective of this project was to create a tracking App in which a user is presented with a list of things to be measured. For the Front End, I used React and Ruby on Rails for the Back-End API.
 
-Project Link: [Final-capstone API]()
+Live version of the project: [Live version](https://illnest-api.herokuapp.com/)
+
+Project Link: [Final-capstone API](https://github.com/mcastorena0316/finalproject-api)
 
 
 <!-- THE BACKEND API -->
 ## The Back End API
 
+The back-end for this project consists of a REST API that manages the illnest database. This database is integrated by the next tables:
+
+1. User Table: For storing username, and encrypted password and password confirmation
+
+2. Illness Table: For storing the name of the illness, and its description. It is depended on the user.
+
+3. Tracking Table:  Include the daily information of the illness. This information includes:
+* Temperature
+* Mood
+* Date
+* Medicines
+* Symptoms
+
 
 <!-- HOW TO USE IT -->
 ### How to use it
 
+You can always use the [live version](https://illnest-api.herokuapp.com/) or install it locally using these steps:
 
+
+#### Clone my repository
+
+`$ git clone https://github.com/mcastorena0316/finalproject-api`
+
+#### Go to my project's folder
+
+`$ cd finalproject-api`
+
+#### Get the dependencies needed
+
+`$ Bundle install`
+
+#### Create and migrate the tables
+`$ rails db:create`
+`$ rails db:migrate`
+`$ rails db:seed`
+
+#### Start the server
+`$ rails server`
 
 <!-- TECNOLOGIES USED -->
 ## Tecnologies used
