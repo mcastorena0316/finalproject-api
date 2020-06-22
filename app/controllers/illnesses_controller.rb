@@ -1,7 +1,4 @@
 class IllnessesController < ApplicationController
-  # before_action :find_user
-  # before_action :find_illness, only: %i[show update destroy]
-
   def index
     @user = User.find(params[:user_id])
     render json: @user.illnesses
@@ -60,12 +57,4 @@ class IllnessesController < ApplicationController
   def illness_params
     params.require(:illness).permit(:name, :description, :user_id, :id)
   end
-
-  # def find_user
-  #   @user = User.find(params[:user_id])
-  # end
-
-  # def find_illness
-  #   @illness = Illness.find(params[:id])
-  # end
 end
