@@ -9,16 +9,12 @@ default: &default
 development:
   <<: *default
   database: apifinal-capstone_development
-  # username:  <%= ENV['FINAL_CAPSTONE_DATABASE_USER'] %>
-  # password:   <%= ENV['FINAL_CAPSTONE_DATABASE_PASSWORD'] %>
   host: localhost
   pool: 5
 
 test:
   <<: *default
   database: apifinal-capstone_test
-  # username:  <%= ENV['FINAL_CAPSTONE_DATABASE_USER'] %>
-  # password:   <%= ENV['FINAL_CAPSTONE_DATABASE_PASSWORD'] %>
   host: localhost
   pool: 5
 
