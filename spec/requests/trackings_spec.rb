@@ -13,13 +13,25 @@ RSpec.describe 'Illness API' do
   describe 'GET users/:user_id/illnesses/:illness_id/trackings' do
     before { get "/users/#{user_id}/illnesses/#{illness_id}/trackings" }
 
-    context 'when user exists' do
+    context 'when illness exists' do
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
       end
 
-      it 'returns all user illneses' do
+      it 'returns all user trackings of a certain illness' do
         expect(json.size).to eq(10)
+      end
+    end
+
+    context 'when illness does not exist' do
+      let(:illness_id) { 0 }
+
+      it 'returns status code 500' do
+        expect(json['status']).to eq(500)
+      end
+
+      it 'returns a not found message' do
+        expect(json['errors']).to eq(['Tracking not found'])
       end
     end
   end
@@ -28,13 +40,23 @@ RSpec.describe 'Illness API' do
   describe 'GET /users/:user_id/illnesses/:illness_id/trackings/:id' do
     before { get "/users/#{user_id}/illnesses/#{illness_id}/trackings/#{id}" }
 
-    context 'when illness exists' do
+    context 'when tracking exists' do
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
       end
 
-      it 'returns the illness' do
+      it 'returns the tracking' do
         expect(json['id']).to eq(id)
+      end
+    end
+    context 'when tracking does not exist' do
+      let(:id) { 0 }
+      it 'returns status code 404' do
+        expect(json['status']).to eq(500)
+      end
+
+      it 'returns a not found message' do
+        expect(json['errors']).to eq(['Tracking not found'])
       end
     end
   end
@@ -50,9 +72,21 @@ RSpec.describe 'Illness API' do
         expect(response).to have_http_status(200)
       end
     end
+
+    context 'when an invalid request' do
+      before { post "/users/#{user_id}/illnesses/#{illness_id}/trackings", params: {} }
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(400)
+      end
+
+      it 'returns a unable to create illness message' do
+        expect(json['error']).to eq('Unable to create Tracking')
+      end
+    end
   end
 
-  # Test suite for PUT /users/:user_id/illnesses/:id
+  #   # Test suite for PUT /users/:user_id/illnesses/:id
   describe 'PUT /users/:user_id/illnesses/:illness_id/trackings/:id' do
     let(:valid_attributes) { { tracking: { temperature: 38 } } }
 
@@ -68,6 +102,18 @@ RSpec.describe 'Illness API' do
         expect(updated_tracking.temperature).to match(38)
       end
     end
+
+    context 'when the tracking does not exist' do
+      let(:id) { 0 }
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(400)
+      end
+
+      it 'returns a not found message' do
+        expect(json['error']).to eq('Unable to update Tracking')
+      end
+    end
   end
 
   #   Test suite for DELETE /deleteday
@@ -76,6 +122,16 @@ RSpec.describe 'Illness API' do
 
     it 'returns status code 200' do
       expect(response).to have_http_status(200)
+    end
+
+    before { get "/users/#{user_id}/illnesses/#{illness_id}/trackings" }
+
+    it 'expects size to decrease one' do
+      expect(json.size).to eq(9)
+    end
+
+    it 'expects different id first one' do
+      expect(json[0]['id']).not_to eq(id)
     end
   end
 end

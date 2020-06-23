@@ -5,7 +5,7 @@ RSpec.describe 'User API', type: :request do
   let!(:users) { create_list(:user, 10) }
   let(:user_id) { users.first.id }
 
-  #   Test suite for GET /users
+  # Test suite for GET /users
   describe 'GET /users' do
     before { get '/users' }
 
@@ -19,7 +19,7 @@ RSpec.describe 'User API', type: :request do
     end
   end
 
-  #   # Test suite for GET /users/:id
+  # Test suite for GET /users/:id
   describe 'GET /users/:id' do
     before { get "/users/#{user_id}" }
 
@@ -31,6 +31,18 @@ RSpec.describe 'User API', type: :request do
 
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when the user does not exist' do
+      let(:user_id) { 100 }
+
+      it 'returns error 500' do
+        expect(json['status']).to eq(500)
+      end
+
+      it 'returns a not found message' do
+        expect(json['errors']).to eq(['user not found'])
       end
     end
   end
