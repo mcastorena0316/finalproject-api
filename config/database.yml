@@ -8,17 +8,17 @@ default: &default
 
 development:
   <<: *default
-  database: api_finalcapstone_development
-  username: rubyuser
-  password: 'rubyuser'
+  database: apifinal-capstone_development
+  # username:  <%= ENV['FINAL_CAPSTONE_DATABASE_USER'] %>
+  # password:   <%= ENV['FINAL_CAPSTONE_DATABASE_PASSWORD'] %>
   host: localhost
   pool: 5
 
 test:
   <<: *default
-  database: api_finalcapstone_test
-  username: rubyuser
-  password: 'rubyuser'
+  database: apifinal-capstone_test
+  # username:  <%= ENV['FINAL_CAPSTONE_DATABASE_USER'] %>
+  # password:   <%= ENV['FINAL_CAPSTONE_DATABASE_PASSWORD'] %>
   host: localhost
   pool: 5
 
@@ -44,7 +44,7 @@ test:
 production:
   <<: *default
   database: api_finalcapstone_production
-  username: rubyuser
-  password: 'rubyuser'
+  username:  <%= ENV['FINAL_CAPSTONE_DATABASE_USER'] %>
+  password:   <%= ENV['FINAL_CAPSTONE_DATABASE_PASSWORD'] %>
   host: localhost
   pool: 5
