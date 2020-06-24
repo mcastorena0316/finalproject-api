@@ -25,11 +25,11 @@ RSpec.describe 'Illness API' do
       let(:user_id) { 0 }
 
       it 'returns status code 404' do
-        expect(json['status']).to eq(500)
+        expect(response).to have_http_status(404)
       end
 
       it 'returns a not found message' do
-        expect(json['errors']).to eq(['Illness not found'])
+        expect(response.body).to match(/Couldn't find User/)
       end
     end
   end
@@ -51,17 +51,17 @@ RSpec.describe 'Illness API' do
     context 'when illness does not exist' do
       let(:id) { 0 }
       it 'returns status code 404' do
-        expect(json['status']).to eq(500)
+        expect(response).to have_http_status(404)
       end
 
       it 'returns a not found message' do
-        expect(json['errors']).to eq(['Illness not found'])
+        expect(response.body).to match(/Couldn't find Illness/)
       end
     end
   end
 
   #   Test suite for POST illness
-  describe 'POST /createill' do
+  describe 'POST post "/users/:user_id/illnesses' do
     let(:valid_attributes) { { illness: { name: 'Heartache', description: 'Pain', user_id: user_id } } }
 
     context 'when request attributes are valid' do
@@ -72,20 +72,20 @@ RSpec.describe 'Illness API' do
       end
 
       context 'when an invalid request' do
-        before { post "/users/#{user_id}/illnesses", params: {} }
+        before { post "/users/#{user_id}/illnesses", params: { illness: { name: '' } } }
 
-        it 'returns status code 200' do
+        it 'returns status code 400' do
           expect(response).to have_http_status(400)
         end
 
-        it 'returns a unable to create illness message' do
-          expect(json['error']).to eq('Unable to create Illness')
+        it 'returns a failure message' do
+          expect(response.body).to match(/Unable to create Illness/)
         end
       end
     end
   end
 
-  # Test suite for PUT /users/:user_id/illnesses/:id
+  # Test suite for PUT Illness
   describe 'PUT /users/:user_id/illnesses/:id' do
     let(:valid_attributes) { { illness: { name: 'Gastritis' } } }
 
@@ -106,17 +106,17 @@ RSpec.describe 'Illness API' do
       let(:id) { 0 }
 
       it 'returns status code 404' do
-        expect(response).to have_http_status(400)
+        expect(response).to have_http_status(404)
       end
 
       it 'returns a not found message' do
-        expect(json['error']).to eq('Unable to update Illness')
+        expect(response.body).to match(/Couldn't find Illness/)
       end
     end
   end
 
-  #   Test suite for DELETE /deleteill
-  describe 'DELETE /deleteill' do
+  #   Test suite for DELETE Illness
+  describe 'DELETE /users/:user_id/illnesses/:id' do
     before { delete "/users/#{user_id}/illnesses/#{id}" }
 
     it 'returns status code 200' do

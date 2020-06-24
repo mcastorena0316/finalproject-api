@@ -26,12 +26,12 @@ RSpec.describe 'Illness API' do
     context 'when illness does not exist' do
       let(:illness_id) { 0 }
 
-      it 'returns status code 500' do
-        expect(json['status']).to eq(500)
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
       end
 
       it 'returns a not found message' do
-        expect(json['errors']).to eq(['Tracking not found'])
+        expect(response.body).to match(/Couldn't find Illness/)
       end
     end
   end
@@ -52,17 +52,17 @@ RSpec.describe 'Illness API' do
     context 'when tracking does not exist' do
       let(:id) { 0 }
       it 'returns status code 404' do
-        expect(json['status']).to eq(500)
+        expect(response).to have_http_status(404)
       end
 
       it 'returns a not found message' do
-        expect(json['errors']).to eq(['Tracking not found'])
+        expect(response.body).to match(/Couldn't find Tracking/)
       end
     end
   end
 
-  # Test suite for PUT trackings
-  describe 'POST /createday' do
+  # Test suite for POST trackings
+  describe 'POST /users/:user_id/illnesses/:illness_id/trackings' do
     let(:valid_attributes) { { tracking: { date: '2014-09-23', temperature: 37, illness_id: illness_id } } }
 
     context 'when request attributes are valid' do
@@ -74,19 +74,19 @@ RSpec.describe 'Illness API' do
     end
 
     context 'when an invalid request' do
-      before { post "/users/#{user_id}/illnesses/#{illness_id}/trackings", params: {} }
+      before { post "/users/#{user_id}/illnesses/#{illness_id}/trackings", params: { tracking: { temperature: 38 } } }
 
-      it 'returns status code 200' do
+      it 'returns status code 400' do
         expect(response).to have_http_status(400)
       end
 
       it 'returns a unable to create illness message' do
-        expect(json['error']).to eq('Unable to create Tracking')
+        expect(response.body).to match(/Unable to create Date/)
       end
     end
   end
 
-  #   # Test suite for PUT /users/:user_id/illnesses/:id
+  # Test suite for PUT Trackings
   describe 'PUT /users/:user_id/illnesses/:illness_id/trackings/:id' do
     let(:valid_attributes) { { tracking: { temperature: 38 } } }
 
@@ -107,17 +107,17 @@ RSpec.describe 'Illness API' do
       let(:id) { 0 }
 
       it 'returns status code 404' do
-        expect(response).to have_http_status(400)
+        expect(response).to have_http_status(404)
       end
 
       it 'returns a not found message' do
-        expect(json['error']).to eq('Unable to update Tracking')
+        expect(response.body).to match(/Couldn't find Tracking/)
       end
     end
   end
 
-  #   Test suite for DELETE /deleteday
-  describe 'DELETE /deleteday' do
+  #   Test suite for DELETE Trackings
+  describe 'DELETE /users/:user_id/illnesses/:illness_id/trackings/:id' do
     before { delete "/users/#{user_id}/illnesses/#{illness_id}/trackings/#{id}" }
 
     it 'returns status code 200' do

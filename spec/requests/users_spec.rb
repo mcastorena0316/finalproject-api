@@ -35,14 +35,14 @@ RSpec.describe 'User API', type: :request do
     end
 
     context 'when the user does not exist' do
-      let(:user_id) { 100 }
+      let(:user_id) { 0 }
 
-      it 'returns error 500' do
-        expect(json['status']).to eq(500)
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
       end
 
       it 'returns a not found message' do
-        expect(json['errors']).to eq(['user not found'])
+        expect(response.body).to match(/Couldn't find User/)
       end
     end
   end
@@ -66,8 +66,13 @@ RSpec.describe 'User API', type: :request do
     context 'when the request is invalid' do
       before { post '/users', params: { user: { username: 'Foobar2' } } }
 
-      it 'returns status code 500' do
-        expect(json['status']).to eq(500)
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns a validation failure message' do
+        expect(response.body)
+          .to match(/Password can't be blank/)
       end
     end
   end
